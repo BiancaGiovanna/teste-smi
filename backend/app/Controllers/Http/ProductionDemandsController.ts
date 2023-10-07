@@ -135,4 +135,35 @@ export default class ProductionDemandsController {
       }
     }
   }
+  public async updateStatus({ params, request, response }: HttpContextContract) {
+    try {
+      const { status } = request.only(['status'])
+
+      // Verifique se o valor de status é válido (um dos valores permitidos)
+      const allowedStatusValues = ['PLANEJADO', 'EM ANDAMENTO', 'CONCLUIDO']
+
+      if (!allowedStatusValues.includes(status)) {
+        return response.status(400).json({
+          message:
+            'Status inválido. Os valores permitidos são PLANEJADO, EM ANDAMENTO ou CONCLUIDO.',
+        })
+      }
+
+      const demand = await Demand.findOrFail(params.id)
+
+      demand.status = status
+
+      await demand.save()
+
+      return {
+        message: 'Status da demanda atualizado com sucesso',
+        data: demand,
+      }
+    } catch (error) {
+      console.error(error)
+      response.status(500).json({
+        message: `${error} Erro interno do servidor`,
+      })
+    }
+  }
 }
