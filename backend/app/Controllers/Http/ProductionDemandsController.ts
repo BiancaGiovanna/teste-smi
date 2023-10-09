@@ -7,14 +7,19 @@ export default class ProductionDemandsController {
   public async store({ request, response }: HttpContextContract) {
     try {
       const validationSchema = schema.create({
+        sku: schema.string({ trim: true }, [
+          rules.required(),
+          rules.minLength(3),
+          rules.maxLength(75),
+        ]),
         periodo_inicio: schema.date({}, [rules.required()]),
         periodo_fim: schema.date({}, [rules.required()]),
         planejado: schema.number([rules.required()]),
-        produzido: schema.number([rules.required()]),
+        // produzido: schema.number([rules.required()]),
         description: schema.string({ trim: true }, [
           rules.required(),
           rules.minLength(3),
-          rules.maxLength(500),
+          rules.maxLength(255),
         ]),
       })
 
@@ -25,12 +30,13 @@ export default class ProductionDemandsController {
           'periodo_fim.required': 'O campo período é obrigatório.',
           'planejado.required': 'O campo planejado é obrigatório.',
           'planejado.number': 'O campo planejado deve ser um número.',
-          'produzido.required': 'O campo produzido é obrigatório.',
-          'produzido.number': 'O campo produzido deve ser um número.',
+          // 'produzido.required': 'O campo produzido é obrigatório.',
+          // 'produzido.number': 'O campo produzido deve ser um número.',
           'decription.required': 'O campo descrição é obrigatório.',
           'decription.string': 'O campo descrição deve ser um texto.',
           'decription.minLength': 'A descrição deve ter pelo menos 3 caracteres.',
           'decription.maxLength': 'A descrição não pode exceder 500 caracteres.',
+          'sku': 'SKU é requirido',
         },
       })
 

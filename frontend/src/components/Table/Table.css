@@ -1,0 +1,78 @@
+/* Estilos da tabela */
+.table-container {
+  max-height: 500px;
+  overflow-y: auto;
+  margin-top: 30px;
+}
+
+
+
+.my-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 16px;
+
+}
+
+/* Estilos do cabeçalho */
+.my-table th {
+  background-color: #F05123;
+  color: white;
+  padding: 10px;
+}
+
+/* Estilos das células */
+.my-table td,
+.my-table th {
+  border: 1px solid #ddd;
+  text-align: center;
+  padding: 8px;
+}
+
+/* Estilos de linhas alternadas */
+.my-table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Estilos dos botões de edição */
+.my-button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.my-button:hover {
+  background-color: #258cd1;
+}
+
+/* Estilos das células de status */
+.status-cell {
+  font-weight: bold;
+  padding: 8px;
+  text-align: center;
+  border-radius: 4px;
+}
+
+/* Estilos para status 'PLANEJADO' */
+.bg-lightgreen {
+  background-color: #c7f1d6;
+  color: #106e36;
+  /* Adicione cor do texto para legibilidade */
+}
+
+/* Estilos para status 'EM ANDAMENTO' */
+.bg-lightblue {
+  background-color: #c1d5f7;
+  color: #0a3a7f;
+  /* Adicione cor do texto para legibilidade */
+}
+
+/* Estilos para status 'CONCLUÍDO' */
+.bg-lightred {
+  background-color: #f7c1c1;
+  color: #8f0b0b;
+  /* Adicione cor do texto para legibilidade */
+}

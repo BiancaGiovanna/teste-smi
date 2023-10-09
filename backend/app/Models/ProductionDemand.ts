@@ -21,7 +21,7 @@ export default class ProductionDemand extends BaseModel {
   public produzido: number
 
   @column()
-  public sku: string = uuid()
+  public sku: string
 
   @column()
   public status: 'PLANEJADO' | 'EM ANDAMENTO' | 'CONCLUIDO'

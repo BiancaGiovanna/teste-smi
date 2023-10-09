@@ -1,0 +1,23 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  padding-left: 4rem;
+  padding-right: 4rem;
+  background-color: #232120;
+  color: #fff;
+
+
+}
+
+.empresa-logo {
+  width: 100px;
+  height: auto;
+}
+
+.user-photo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
