@@ -106,10 +106,7 @@ function TabelaDeDados() {
                 <tr key={item.id}>
                   <td>{item.sku}</td>
                   <td>{item.description}</td>
-                  <td>
-                    <input type="number" name="" id="" />
-                    {item.planejado}
-                  </td>
+                  <td>{item.planejado}</td>
                   <td>
                     <button onClick={() => handleDelete(item.id)}>
                       <BsFillTrashFill />
@@ -130,7 +127,6 @@ function TabelaDeDados() {
           <table className="my-table">
             <thead>
               <tr>
-                <th>id</th>
                 <th>Editar</th>
                 <th>Período</th>
                 <th>SKU</th>
@@ -142,7 +138,6 @@ function TabelaDeDados() {
             <tbody>
               {dados.data.map((item) => (
                 <tr key={item.id}>
-                  <td>{item.id}</td>
                   <td>
                     <button onClick={openModal}>
                       <AiFillEdit size={24} />

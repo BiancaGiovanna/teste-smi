@@ -66,7 +66,7 @@ const Insert: React.FC = () => {
 
   return (
     <main>
-      <h1>Criar demanda de produção</h1>
+      <h1 className="form-title ">Criar demanda de produção</h1>
       <form className="form" onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="periodo_inicio">Período de Início:</label>
