@@ -15,7 +15,6 @@ export default class ProductionDemandsController {
         periodo_inicio: schema.date({}, [rules.required()]),
         periodo_fim: schema.date({}, [rules.required()]),
         planejado: schema.number([rules.required()]),
-        // produzido: schema.number([rules.required()]),
         description: schema.string({ trim: true }, [
           rules.required(),
           rules.minLength(3),
@@ -30,8 +29,6 @@ export default class ProductionDemandsController {
           'periodo_fim.required': 'O campo período é obrigatório.',
           'planejado.required': 'O campo planejado é obrigatório.',
           'planejado.number': 'O campo planejado deve ser um número.',
-          // 'produzido.required': 'O campo produzido é obrigatório.',
-          // 'produzido.number': 'O campo produzido deve ser um número.',
           'decription.required': 'O campo descrição é obrigatório.',
           'decription.string': 'O campo descrição deve ser um texto.',
           'decription.minLength': 'A descrição deve ter pelo menos 3 caracteres.',
@@ -87,6 +84,17 @@ export default class ProductionDemandsController {
   //Update
   public async update({ params, request, response }: HttpContextContract) {
     try {
+      const allowedStatusValues = ['PLANEJADO', 'EM ANDAMENTO', 'CONCLUIDO']
+
+      const { status, ...body } = request.only(['status', 'periodo_inicio', 'periodo_fim', 'planejado', 'produzido', 'description'])
+
+      if (status && !allowedStatusValues.includes(status)) {
+        return response.status(400).json({
+          message:
+            'Status inválido. Os valores permitidos são PLANEJADO, EM ANDAMENTO ou CONCLUIDO.',
+        })
+      }
+
       const validationSchema = schema.create({
         periodo_inicio: schema.date({}, [rules.required()]),
         periodo_fim: schema.date({}, [rules.required()]),
@@ -95,11 +103,11 @@ export default class ProductionDemandsController {
         description: schema.string({ trim: true }, [
           rules.required(),
           rules.minLength(3),
-          rules.maxLength(500),
+          rules.maxLength(255),
         ]),
       })
 
-      const body = await request.validate({
+      const data = await request.validate({
         schema: validationSchema,
         messages: {
           'periodoInicio.required': 'O campo período de início é obrigatório.',
@@ -111,15 +119,17 @@ export default class ProductionDemandsController {
           'description.required': 'O campo descrição é obrigatório.',
           'description.string': 'O campo descrição deve ser um texto.',
           'description.minLength': 'A descrição deve ter pelo menos 3 caracteres.',
-          'description.maxLength': 'A descrição não pode exceder 500 caracteres.',
+          'description.maxLength': 'A descrição não pode exceder 255 caracteres.',
         },
       })
 
-      // Encontre o registro existente pelo ID
       const demand = await Demand.findOrFail(params.id)
 
-      // Atualize os campos relevantes com base nos dados recebidos no corpo da solicitação
-      demand.merge(body)
+      if (status) {
+        demand.status = status
+      }
+
+      demand.merge(data)
 
       await demand.save()
 
@@ -139,37 +149,6 @@ export default class ProductionDemandsController {
           message: `${error} Erro interno do servidor`,
         })
       }
-    }
-  }
-  public async updateStatus({ params, request, response }: HttpContextContract) {
-    try {
-      const { status } = request.only(['status'])
-
-      // Verifique se o valor de status é válido (um dos valores permitidos)
-      const allowedStatusValues = ['PLANEJADO', 'EM ANDAMENTO', 'CONCLUIDO']
-
-      if (!allowedStatusValues.includes(status)) {
-        return response.status(400).json({
-          message:
-            'Status inválido. Os valores permitidos são PLANEJADO, EM ANDAMENTO ou CONCLUIDO.',
-        })
-      }
-
-      const demand = await Demand.findOrFail(params.id)
-
-      demand.status = status
-
-      await demand.save()
-
-      return {
-        message: 'Status da demanda atualizado com sucesso',
-        data: demand,
-      }
-    } catch (error) {
-      console.error(error)
-      response.status(500).json({
-        message: `${error} Erro interno do servidor`,
-      })
     }
   }
 }
