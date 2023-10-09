@@ -84,7 +84,7 @@ Para executar o frontend do projeto em ReactJS, siga estas etapas:
 - Gerenciamento de Estado (Frontend): React Hooks (useState, useEffect)
 - Estilização (Frontend): CSS e CSS Modules
 
-Este projeto foi desenvolvido como um exemplo simples de uma aplicação de gestão de demandas e pode ser expandido com recursos adicionais, autenticação de usuário e muito mais.
+Este projeto foi desenvolvido como um teste simples de uma aplicação de gestão de demandas e pode ser expandido com recursos adicionais, autenticação de usuário e muito mais.
 
 ---
 
